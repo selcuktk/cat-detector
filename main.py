@@ -1,5 +1,6 @@
 from ImageAugmentation import ImageAugmentor
-
+from image2matrix import i2m
+import numpy as np
 
 class Main:
     @staticmethod
@@ -23,11 +24,30 @@ class Main:
         # Process images for both categories
         print("Processing cat images...")
         cat_augmentor.process_images()
-
         print("Processing noncat images...")
         noncat_augmentor.process_images()
-
         print(f"Rotated images saved to {output_folder_cat} & {output_folder_noncat}")
+        
+
+        Xm_cat = i2m.process_folder(output_folder_cat)  
+        Xm_noncat =  i2m.process_folder(output_folder_noncat)
+
+        Xm = np.concatenate([Xm_cat, Xm_noncat], axis=1)
+        print(Xm)
+        print()
+        print(Xm.shape)
+
+        Ym_cat = np.ones(252).reshape(1, 252)
+        Ym_noncat = np.zeros(248).reshape(1, 248)
+        Ym = np.concatenate([Ym_cat, Ym_noncat], axis=1)
+
+        print(Ym_cat.shape)
+        print(Ym_noncat.shape)
+        print(Ym.shape)
+
+        print(Ym_cat)
+        print(Ym_noncat)
+        print(Ym)
         
 
         
