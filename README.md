@@ -50,6 +50,7 @@ pip install numpy Image
     ![rgb_mat_transparent](https://github.com/user-attachments/assets/c265adde-2589-4aca-8ad2-6adb527ad6b2)    
 
     - The concatenation of x arrays into a single array, denoted as X, represents the process of **vectorization**. Vectorization provides faster training compared to an explicit for loop.![rgb_final](https://github.com/user-attachments/assets/8bd90896-283b-4e07-b2bb-4b374ee8c4c6)
+    - Please have a look at for further calculations about [back and forward propagation](https://github.com/user-attachments/files/17488156/detailed.explanation.pdf).
 
 
 

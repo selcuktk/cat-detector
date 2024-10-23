@@ -57,9 +57,9 @@ class Main:
         wL3 = np.random.randn(1, 5) * 0.01
 
         """
-        2997     0.6930572504035801
-        2998     0.6930651407201147
-        2999     0.6930623821464091
+        9997     0.6928421656779147
+        9998     0.6928416569351841
+        9999     0.6928411469188254
         """
         
         bL1 = np.zeros((6, 1))
@@ -68,7 +68,7 @@ class Main:
 
         J = 0
 
-        learning_rate = 0.09
+        learning_rate = 0.2
         num_iterations = 10000
 
 
@@ -76,7 +76,7 @@ class Main:
                 m = Xm.shape[1]  # number of examples
                 J = 0
 
-                # Forwardpropagation
+                # Forward propagation
                 ZL1 = np.dot((wL1), Xm) + bL1
                 AL1 = sig(ZL1)
 
@@ -90,7 +90,7 @@ class Main:
                 J += -((Ym*(np.log(AL3))) + (1-Ym)*(np.log(1-AL3)))
                 J = np.sum(J)/m
 
-                # Backpropagation
+                # Back propagation
                 dzL3 = AL3 - Ym
                 dwL3 = (1/m) * np.dot(dzL3, AL2.T)
                 dbL3 = (1/m) * np.sum(dzL3, axis=1, keepdims = True)
