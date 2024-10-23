@@ -1,5 +1,6 @@
 from ImageAugmentation import ImageAugmentor
 from image2matrix import i2m
+from dl_utils import activation
 import numpy as np
 
 class Main:
@@ -68,7 +69,7 @@ class Main:
 
         J = 0
 
-        learning_rate = 0.2
+        learning_rate = 0.05
         num_iterations = 10000
 
 
@@ -78,13 +79,13 @@ class Main:
 
                 # Forward propagation
                 ZL1 = np.dot((wL1), Xm) + bL1
-                AL1 = sig(ZL1)
+                AL1 = activation.sigmoid(ZL1)
 
                 ZL2 = np.dot((wL2), AL1) + bL2
-                AL2 = sig(ZL2)
+                AL2 = activation.sigmoid(ZL2)
 
                 ZL3 = np.dot((wL3), AL2) + bL3
-                AL3 = sig(ZL3)
+                AL3 = activation.sigmoid(ZL3)
                 
                 # Cost to print
                 J += -((Ym*(np.log(AL3))) + (1-Ym)*(np.log(1-AL3)))
@@ -95,11 +96,11 @@ class Main:
                 dwL3 = (1/m) * np.dot(dzL3, AL2.T)
                 dbL3 = (1/m) * np.sum(dzL3, axis=1, keepdims = True)
 
-                dzL2 = np.dot(wL3.T, dzL3) * (AL2) * (1-AL2)
+                dzL2 = np.dot(wL3.T, dzL3) * activation.sigmoid_derivative(AL2)
                 dwL2 = (1/m) * np.dot(dzL2, AL1.T)
                 dbL2 = (1/m) * np.sum(dzL2, axis=1, keepdims=True)
 
-                dzL1 = np.dot(wL2.T, dzL2) * (AL1) * (1-AL1)
+                dzL1 = np.dot(wL2.T, dzL2) * activation.sigmoid_derivative(AL1)
                 dwL1 = (1/m) * np.dot(dzL1, Xm.T)
                 dbL1 = (1/m) * np.sum(dzL1, axis=1, keepdims=True)
 
@@ -116,18 +117,7 @@ class Main:
                 print(f"{i} \t {J}")
         
         
-                
-
-
-
             
-
-        
-
-def sig(x):
- return 1/(1 + np.exp(-x))
-
-
 
 
 if __name__ == "__main__":
