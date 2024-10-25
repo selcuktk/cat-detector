@@ -30,7 +30,7 @@ class activation:
         return daL
 
 class dl_functions:
-    @staticmethod
+    @staticmethod9
     def initialize_parameters(lsz):
         # array that contains size of the hidden layers and output layer
         parameters = {}
