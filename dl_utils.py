@@ -25,8 +25,8 @@ class activation:
 
     @staticmethod
     def relu_derivative(aL):
-        daL = np.ones_like(aL)  # create an array which has the same size of aL
-        daL[aL <= 0] = 0       # it changes the specific elements that provide the given condition
+        daL = np.ones_like(aL)
+        daL[aL <= 0] = 0       
         return daL
 
     

@@ -45,3 +45,12 @@ class i2m:
             print("No images found or processed.")
 
         return Xm
+    
+    # It shuffles two arrays with the same index change, 
+    # therefore the index of the target value of x stays the same at the target array.
+    @staticmethod
+    def shuffle_xy_together(x, y):
+            assert x.shape[1] == y.shape[1]
+            for i in range(5):
+                p = np.random.permutation(x.shape[1])
+                return x[:, p], y[:, p]

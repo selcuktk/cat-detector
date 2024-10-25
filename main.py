@@ -47,6 +47,8 @@ class Main:
         Ym_noncat = np.zeros(248).reshape(1, 248)
         Ym = np.concatenate([Ym_cat, Ym_noncat], axis=1)
 
+        Xm, Ym = i2m.shuffle_xy_together(Xm, Ym)
+
 
         print(Ym_cat.shape)
         print(Ym_noncat.shape)
