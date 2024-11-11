@@ -1,6 +1,7 @@
+import pickle
 from ImageAugmentation import ImageAugmentor
 from image2matrix import i2m
-from dl_utils import activation
+from dl_utils import dlf
 import numpy as np
 
 class Main:
@@ -47,76 +48,21 @@ class Main:
         Ym_noncat = np.zeros(248).reshape(1, 248)
         Ym = np.concatenate([Ym_cat, Ym_noncat], axis=1)
 
-        Xm, Ym = i2m.shuffle_xy_together(Xm, Ym)
-
+        # Xm, Ym = i2m.shuffle_xy_together(Xm, Ym)
 
         print(Ym_cat.shape)
         print(Ym_noncat.shape)
         print(Ym.shape)
         print("--------------")
 
-        wL1 = np.random.randn(6, 12288) * 0.01
-        wL2 = np.random.randn(5, 6) * 0.01
-        wL3 = np.random.randn(1, 5) * 0.01
 
-        """
-        9997     0.6928421656779147
-        9998     0.6928416569351841
-        9999     0.6928411469188254
-        """
+        final_parameters = dlf.L_layer_model(Xm, Ym, [12288, 4096, 6, 1], 0.005, 5000, True)
         
-        bL1 = np.zeros((6, 1))
-        bL2 = np.zeros((5, 1))
-        bL3 = np.zeros((1, 1))
-
-        J = 0
-
-        learning_rate = 0.05
-        num_iterations = 10000
+        # Write to file
+        with open("final_parameters.pkl", "wb") as file:
+            pickle.dump(final_parameters, file)
 
 
-        for i in range (num_iterations):
-                m = Xm.shape[1]  # number of examples
-                J = 0
-
-                # Forward propagation
-                ZL1 = np.dot((wL1), Xm) + bL1
-                AL1 = activation.sigmoid(ZL1)
-
-                ZL2 = np.dot((wL2), AL1) + bL2
-                AL2 = activation.sigmoid(ZL2)
-
-                ZL3 = np.dot((wL3), AL2) + bL3
-                AL3 = activation.sigmoid(ZL3)
-                
-                # Cost to print
-                J += -((Ym*(np.log(AL3))) + (1-Ym)*(np.log(1-AL3)))
-                J = np.sum(J)/m
-
-                # Back propagation
-                dzL3 = AL3 - Ym
-                dwL3 = (1/m) * np.dot(dzL3, AL2.T)
-                dbL3 = (1/m) * np.sum(dzL3, axis=1, keepdims = True)
-
-                dzL2 = np.dot(wL3.T, dzL3) * activation.sigmoid_derivative(AL2)
-                dwL2 = (1/m) * np.dot(dzL2, AL1.T)
-                dbL2 = (1/m) * np.sum(dzL2, axis=1, keepdims=True)
-
-                dzL1 = np.dot(wL2.T, dzL2) * activation.sigmoid_derivative(AL1)
-                dwL1 = (1/m) * np.dot(dzL1, Xm.T)
-                dbL1 = (1/m) * np.sum(dzL1, axis=1, keepdims=True)
-
-                # Gradient Descent - Update weights and biases
-                wL1 -= learning_rate * dwL1
-                bL1 -= learning_rate * dbL1
-
-                wL2 -= learning_rate * dwL2
-                bL2 -= learning_rate * dbL2
-
-                wL3 -= learning_rate * dwL3
-                bL3 -= learning_rate * dbL3
-                
-                print(f"{i} \t {J}")
         
         
             
