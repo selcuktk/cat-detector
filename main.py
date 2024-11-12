@@ -12,12 +12,12 @@ class Main:
         # All .jpg files are augmented by rotating 0, 90, 180, 270 degrees and put into an output folder
 
         # Data folder paths for cat and noncat images
-        image_folder_cat = "raw-data\\cat"
-        image_folder_noncat = "raw-data\\noncat"
+        image_folder_cat = "training-data\\cat"
+        image_folder_noncat = "training-data\\noncat"
 
         # Output folders
-        output_folder_cat = "augmented-data\\augmented_cat"
-        output_folder_noncat = "augmented-data\\augmented_noncat"
+        output_folder_cat = "augmented-training-data\\augmented_cat"
+        output_folder_noncat = "augmented-training-data\\augmented_noncat"
 
         # Create instances of ImageAugmentor for cat and noncat folders
         cat_augmentor = ImageAugmentor(image_folder_cat, output_folder_cat)
